@@ -1,0 +1,18 @@
+source_set("meshopt_srcs") {
+    patt = [
+        "src/**.h",
+        "src/**.cpp",
+        "src/**.ispc"
+    ]
+    sources = list_files(patt)
+    include_dirs = [ "src" ]
+    match(target_os) {
+        "windows" => {
+            defines = [ "MESHOPTIMIZER_API=__declspec(dllexport)" ]
+        }
+    }
+}
+
+shared_library("meshoptimizer") {
+    deps = [ ":meshopt_srcs" ]
+}
